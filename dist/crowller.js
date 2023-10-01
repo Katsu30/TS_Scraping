@@ -17,7 +17,7 @@ const playwright_core_1 = require("playwright-core");
     });
     const page = yield browser.newPage();
     yield page.goto('https://www.google.co.jp/');
-    yield page.screenshot({ path: `tmp/sample.png` }); //④スクリーンショット
+    yield page.screenshot({ path: `tmp/sample.png` });
     yield browser.close();
 }))();
 //# sourceMappingURL=crowller.js.map
