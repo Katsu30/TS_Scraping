@@ -1,0 +1,22 @@
+{
+  "name": "scraiping_animan",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "npx tsc",
+    "dev": "ts-node ./src/crowller.ts",
+    "start": "node ./dist/crowller.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "playwright": "^1.38.1",
+    "playwright-core": "^1.38.1"
+  }
+}
