@@ -6,7 +6,8 @@
   "scripts": {
     "build": "npx tsc",
     "dev": "ts-node ./src/crowller.ts",
-    "start": "node ./dist/scraping_test.js"
+    "start": "node ./dist/scraping_animan.js",
+    "animan": "npx tsc && node ./dist/scraping_animan.js"
   },
   "keywords": [],
   "author": "",

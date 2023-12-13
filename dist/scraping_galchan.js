@@ -16,22 +16,13 @@ const fs_1 = __importDefault(require("fs"));
 const playwright_1 = __importDefault(require("playwright"));
 const sync_1 = __importDefault(require("csv-stringify/sync"));
 const TOPICS_ID = "20929287";
-// introareaのテキストと画像
-const getIntroPosts = (context) => __awaiter(void 0, void 0, void 0, function* () {
+const getPostsByPage = (context, pageNum = 1) => __awaiter(void 0, void 0, void 0, function* () {
     const p = yield context.newPage();
-    yield p.goto(`https://animanch.com/archives/20929362.html`);
-    const threadItems = yield p.$$("#entryarea > .res > .t_b");
-    const list = yield Promise.all(threadItems.map((item) => __awaiter(void 0, void 0, void 0, function* () {
-        return {
-            text: yield item.innerText(),
-            textStyle: yield item.getAttribute("style"),
-            image: yield item.$eval("img", (img) => img.getAttribute("src")),
-        };
-    })));
+    yield p.goto(`https://girlschannel.net/topics/${TOPICS_ID}/${pageNum !== 1 ? pageNum : ""}`);
+    const threadItems = yield p.$$(".topic-comment .comment-item .body");
+    const list = yield Promise.all(threadItems.map((item) => __awaiter(void 0, void 0, void 0, function* () { return yield item.innerText(); })));
     return list;
 });
-// mainareanのテキストと画像
-// commentareaのテキスト
 (() => __awaiter(void 0, void 0, void 0, function* () {
     const browser = yield playwright_1.default.chromium.launch({
         channel: "chrome",
@@ -40,21 +31,24 @@ const getIntroPosts = (context) => __awaiter(void 0, void 0, void 0, function* (
     });
     const context = yield browser.newContext();
     const page = yield context.newPage();
-    yield page.goto(`https://animanch.com/archives/20929362.html`);
-    // ページのタイトルを取得
-    const element = yield page.locator("#entryarea > h1");
+    yield page.goto(`https://girlschannel.net/topics/${TOPICS_ID}/`);
+    const element = yield page.locator(".head-area > h1");
     const threadTitle = yield element.innerText();
-    const result = yield getIntroPosts(context);
-    const items = result.flatMap((v) => v);
-    // CSV用のデータを作成
+    const pager = yield page.$$("ul.pager li");
+    const pageNum = yield Promise.all(pager.map((item) => __awaiter(void 0, void 0, void 0, function* () { return yield item.innerText(); })));
+    const set = [...new Set(pageNum)].filter((v) => v).map((v) => parseInt(v));
+    const test = yield Promise.all(Array.from(set).map((_pageNum) => __awaiter(void 0, void 0, void 0, function* () {
+        const result = yield getPostsByPage(context, _pageNum);
+        return result;
+    })));
+    const items = test.flatMap((v) => v);
     const data = [];
     data.push({ title: threadTitle, content: "" });
     items.forEach((item) => {
         data.push({ title: "", content: item });
     });
-    // CSVファイルを作成
     const csvData = sync_1.default.stringify(data, { header: true });
     fs_1.default.writeFileSync(`./threads/${TOPICS_ID}.csv`, csvData);
     yield browser.close();
 }))();
-//# sourceMappingURL=scraping_test.js.map
+//# sourceMappingURL=scraping_galchan.js.map

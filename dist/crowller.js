@@ -12,11 +12,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const playwright_core_1 = require("playwright-core");
 (() => __awaiter(void 0, void 0, void 0, function* () {
     const browser = yield playwright_core_1.chromium.launch({
-        channel: 'chrome',
+        channel: "chrome",
         headless: true,
     });
     const page = yield browser.newPage();
-    yield page.goto('https://www.google.co.jp/');
+    yield page.goto("https://www.google.co.jp/");
     yield page.screenshot({ path: `tmp/sample.png` });
     yield browser.close();
 }))();
