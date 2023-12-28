@@ -81,45 +81,22 @@ const getMainAreaImages = (context) => __awaiter(void 0, void 0, void 0, functio
     const introAreaList = yield getThreadPosts(context, false);
     const mainAreaList = yield getThreadPosts(context, true);
     const commentAreaList = yield getCommentPosts(context);
-    const mainAreaImages = yield getMainAreaImages(context);
     // 各エリアのテキストと画像を結合
     const items = [
-        {
-            number: ``,
-            text: `タイトル: ${threadTitle}`,
-            textStyle: "xxxxxxxxxxxx",
-        },
-        {
-            number: ``,
-            text: `URL: ${THREAD_URL}`,
-            textStyle: "xxxxxxxxxxxx",
-        },
         ...introAreaList,
         ...mainAreaList,
         {
             number: "xxxxxxxxxxx",
             text: "ここからコメントエリア",
-            textStyle: "xxxxxxxxxxxx",
         },
         ...commentAreaList,
-        {
-            number: "xxxxxxxxxxx",
-            text: "ここからメインエリアの画像",
-            textStyle: "xxxxxxxxxxxx",
-        },
-        mainAreaImages.map((item) => ({
-            number: "",
-            text: `https:${item.img}`,
-            textStyle: "",
-        })),
     ].flatMap((v) => v);
     // CSV用のデータを作成
     const data = [];
-    items.forEach((item) => {
+    items.forEach((item, index) => {
         data.push({
-            number: item.number,
+            number: `${(index % 5) + 1}`,
             text: item.text,
-            style: item.textStyle,
         });
     });
     // CSVファイルを作成
@@ -132,4 +109,4 @@ const getMainAreaImages = (context) => __awaiter(void 0, void 0, void 0, functio
     fs_1.default.writeFileSync(`./threads/${TOPICS_ID}_${threadTitle}.csv`, csvData);
     yield browser.close();
 }))();
-//# sourceMappingURL=scraping_animan.js.map
+//# sourceMappingURL=scraping_animan_to_script.js.map

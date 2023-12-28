@@ -108,51 +108,26 @@ const getMainAreaImages = async (context: playwright.BrowserContext) => {
   const mainAreaList = await getThreadPosts(context, true);
   const commentAreaList = await getCommentPosts(context);
 
-  const mainAreaImages = await getMainAreaImages(context);
-
   // 各エリアのテキストと画像を結合
   const items = [
-    {
-      number: ``,
-      text: `タイトル: ${threadTitle}`,
-      textStyle: "xxxxxxxxxxxx",
-    },
-    {
-      number: ``,
-      text: `URL: ${THREAD_URL}`,
-      textStyle: "xxxxxxxxxxxx",
-    },
     ...introAreaList,
     ...mainAreaList,
     {
       number: "xxxxxxxxxxx",
       text: "ここからコメントエリア",
-      textStyle: "xxxxxxxxxxxx",
     },
     ...commentAreaList,
-    {
-      number: "xxxxxxxxxxx",
-      text: "ここからメインエリアの画像",
-      textStyle: "xxxxxxxxxxxx",
-    },
-    mainAreaImages.map((item) => ({
-      number: "",
-      text: `https:${item.img}`,
-      textStyle: "",
-    })),
   ].flatMap((v) => v);
 
   // CSV用のデータを作成
   const data: {
     number: string | null;
     text: string | null;
-    style: string | null;
   }[] = [];
-  items.forEach((item) => {
+  items.forEach((item, index) => {
     data.push({
-      number: item.number,
+      number: `${(index % 5) + 1}`,
       text: item.text,
-      style: item.textStyle,
     });
   });
 
