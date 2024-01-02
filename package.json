@@ -8,7 +8,8 @@
     "dev": "ts-node ./src/crowller.ts",
     "start": "node ./dist/scraping_animan.js",
     "animan": "npx tsc && node ./dist/scraping_animan.js",
-    "as": "npx tsc && node ./dist/scraping_animan_to_script.js"
+    "as": "npx tsc && node ./dist/scraping_animan_to_script.js",
+    "bbs": "npx tsc && node ./dist/scraping_animan_bbs.js"
   },
   "keywords": [],
   "author": "",

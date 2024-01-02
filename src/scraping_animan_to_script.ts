@@ -3,7 +3,7 @@ import playwright from "playwright";
 import stringifySync from "csv-stringify/sync";
 
 // ここにスレッドIDを入れる
-const TOPICS_ID = "20928516";
+const TOPICS_ID = "20856950";
 const THREAD_URL = `https://animanch.com/archives/${TOPICS_ID}.html`;
 
 // introareaのテキストと画像
@@ -100,7 +100,7 @@ const getMainAreaImages = async (context: playwright.BrowserContext) => {
   await page.goto(THREAD_URL);
 
   // ページのタイトルを取得
-  const element = await page.locator("article > h1");
+  const element = page.locator("article > h1");
   const threadTitle: string = await element.innerText();
 
   // 各エリアのテキストと画像を取得

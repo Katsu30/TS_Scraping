@@ -16,7 +16,7 @@ const fs_1 = __importDefault(require("fs"));
 const playwright_1 = __importDefault(require("playwright"));
 const sync_1 = __importDefault(require("csv-stringify/sync"));
 // ここにスレッドIDを入れる
-const TOPICS_ID = "20928516";
+const TOPICS_ID = "20856950";
 const THREAD_URL = `https://animanch.com/archives/${TOPICS_ID}.html`;
 // introareaのテキストと画像
 const getThreadPosts = (context, isMainArea) => __awaiter(void 0, void 0, void 0, function* () {
@@ -75,7 +75,7 @@ const getMainAreaImages = (context) => __awaiter(void 0, void 0, void 0, functio
     const page = yield context.newPage();
     yield page.goto(THREAD_URL);
     // ページのタイトルを取得
-    const element = yield page.locator("article > h1");
+    const element = page.locator("article > h1");
     const threadTitle = yield element.innerText();
     // 各エリアのテキストと画像を取得
     const introAreaList = yield getThreadPosts(context, false);

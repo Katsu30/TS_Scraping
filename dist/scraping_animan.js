@@ -16,7 +16,7 @@ const fs_1 = __importDefault(require("fs"));
 const playwright_1 = __importDefault(require("playwright"));
 const sync_1 = __importDefault(require("csv-stringify/sync"));
 // ここにスレッドIDを入れる
-const TOPICS_ID = "20928516";
+const TOPICS_ID = "20890183";
 const THREAD_URL = `https://animanch.com/archives/${TOPICS_ID}.html`;
 // introareaのテキストと画像
 const getThreadPosts = (context, isMainArea) => __awaiter(void 0, void 0, void 0, function* () {
