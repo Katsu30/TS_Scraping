@@ -3,7 +3,7 @@ import playwright from "playwright";
 import stringifySync from "csv-stringify/sync";
 
 // ここにスレッドIDを入れる
-const TOPICS_ID = "2809038";
+const TOPICS_ID = "2827950";
 const THREAD_URL = `https://bbs.animanch.com/board/${TOPICS_ID}/`;
 
 // introareaのテキストと画像
