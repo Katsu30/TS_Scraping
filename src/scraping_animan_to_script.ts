@@ -3,7 +3,7 @@ import playwright from "playwright";
 import stringifySync from "csv-stringify/sync";
 
 // ここにスレッドIDを入れる
-const TOPICS_ID = "20856950";
+const TOPICS_ID = "20935167";
 const THREAD_URL = `https://animanch.com/archives/${TOPICS_ID}.html`;
 
 // introareaのテキストと画像
@@ -20,10 +20,12 @@ const getThreadPosts = async (
     threadItems.map(
       async (item: playwright.ElementHandle<SVGElement | HTMLElement>) => {
         const number = await item.$eval(".t_h > .resnum", (e) => e.textContent);
-        const text = await item.$eval(".t_b", (e) => e.textContent);
-        const textStyle = await item.$eval(".t_b", (e) =>
-          e.getAttribute("style")
-        );
+        const text = await item
+          .$eval(".t_b", (e) => e.textContent)
+          .catch(() => "");
+        const textStyle = await item
+          .$eval(".t_b", (e) => e.getAttribute("style"))
+          .catch(() => "");
 
         return {
           number,
@@ -49,7 +51,9 @@ const getCommentPosts = async (context: playwright.BrowserContext) => {
           ".commentheader > .commentnumber",
           (e) => e.textContent
         );
-        const text = await item.$eval(".commentbody", (e) => e.textContent);
+        const text = await item
+          .$eval(".commentbody", (e) => e.textContent)
+          .catch(() => "");
 
         return {
           number,

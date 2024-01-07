@@ -16,7 +16,7 @@ const fs_1 = __importDefault(require("fs"));
 const playwright_1 = __importDefault(require("playwright"));
 const sync_1 = __importDefault(require("csv-stringify/sync"));
 // ここにスレッドIDを入れる
-const TOPICS_ID = "20856950";
+const TOPICS_ID = "20935167";
 const THREAD_URL = `https://animanch.com/archives/${TOPICS_ID}.html`;
 // introareaのテキストと画像
 const getThreadPosts = (context, isMainArea) => __awaiter(void 0, void 0, void 0, function* () {
@@ -24,8 +24,12 @@ const getThreadPosts = (context, isMainArea) => __awaiter(void 0, void 0, void 0
     const threadItems = yield p.$$(`${isMainArea ? "#maintext" : "#introtext"} > .res`);
     const list = yield Promise.all(threadItems.map((item) => __awaiter(void 0, void 0, void 0, function* () {
         const number = yield item.$eval(".t_h > .resnum", (e) => e.textContent);
-        const text = yield item.$eval(".t_b", (e) => e.textContent);
-        const textStyle = yield item.$eval(".t_b", (e) => e.getAttribute("style"));
+        const text = yield item
+            .$eval(".t_b", (e) => e.textContent)
+            .catch(() => "");
+        const textStyle = yield item
+            .$eval(".t_b", (e) => e.getAttribute("style"))
+            .catch(() => "");
         return {
             number,
             text,
